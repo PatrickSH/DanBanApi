@@ -39,4 +39,13 @@ class MembershipTypeController extends Controller
         }
         return $data;
     }
+
+    /**
+     * @param Request $request
+     * @return json
+     */
+    public function update(Request $request)
+    {
+        $data = json_decode(MembershipType::find($request->get('id'))->update(['type' => $request->get('type')]));
+    }
 }

@@ -20,6 +20,10 @@ $router->post('membership/type/store', [
     'as' => 'membership_type_store', 'uses' => 'MembershipTypeController@store'
 ]);
 
+$router->post('membership/type/update', [
+    'as' => 'membership_type_update', 'uses' => 'MembershipTypeController@update'
+]);
+
 $router->get('membership/type/get', [
     'as' => 'membership_type_get', 'uses' => 'MembershipTypeController@get'
 ]);
