@@ -15,6 +15,16 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('organization', [
+/****Membership types****/
+$router->post('membership/type/store', [
+    'as' => 'membership_type_store', 'uses' => 'MembershipTypeController@store'
+]);
+
+$router->get('membership/type/get', [
+    'as' => 'membership_type_get', 'uses' => 'MembershipTypeController@get'
+]);
+
+
+$router->post('organization/store', [
     'as' => 'organization', 'uses' => 'UserController@showProfile'
 ]);
