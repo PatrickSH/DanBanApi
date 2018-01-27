@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Organization;
 use App\MembershipType;
+use App\User;
 
-class OrganizationController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,7 +16,7 @@ class OrganizationController extends Controller
      */
     public function __construct()
     {
-        $this->organization = new Organization();
+        $this->user = new User();
     }
 
     /**
@@ -24,7 +25,7 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        $created = json_decode(Organization::create($request->all()));
+        $created = json_decode(User::create($request->only(['organization_id','username','email','password'])));
         return (isset($created->id) && $created->id > 0) ? $created : 0;
     }
 
@@ -35,13 +36,13 @@ class OrganizationController extends Controller
     public function get(Request $request)
     {
         if(!$request->get('id')){
-            $data = $this->organization;
+            $data = $this->user;
         }else{
-            $data = $this->organization->where('id',$request->get('id'));
+            $data = $this->user->where('id',$request->get('id'));
         }
 
-        if($request->get('with_membership')){
-            $data = $data->with('withMembershipType');
+        if($request->get('with_organization')){
+            $data = $data->with('organization');
         }
 
 
@@ -55,7 +56,7 @@ class OrganizationController extends Controller
      */
     public function update(Request $request)
     {
-        $data = json_decode(Organization::find($request->get('id'))->update($request->except(['id'])));
+        $data = json_decode(User::find($request->get('id'))->update($request->only(['organization_id','username','email','password'])));
 
         return $data;
     }

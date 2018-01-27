@@ -28,7 +28,29 @@ $router->get('membership/type/get', [
     'as' => 'membership_type_get', 'uses' => 'MembershipTypeController@get'
 ]);
 
-
+/**Organization****/
 $router->post('organization/store', [
-    'as' => 'organization', 'uses' => 'UserController@showProfile'
+    'as' => 'organization', 'uses' => 'OrganizationController@store'
+]);
+
+$router->post('organization/update', [
+    'as' => 'organization_update', 'uses' => 'OrganizationController@update'
+]);
+
+$router->get('organization/get', [
+    'as' => 'organization_get', 'uses' => 'OrganizationController@get'
+]);
+
+
+/****User****/
+$router->post('user/store', [
+    'as' => 'user_store', 'uses' => 'UserController@store'
+]);
+
+$router->post('user/update', [
+    'as' => 'user_update', 'uses' => 'UserController@update'
+]);
+
+$router->get('user/get', [
+    'as' => 'user_get', 'uses' => 'UserController@get'
 ]);

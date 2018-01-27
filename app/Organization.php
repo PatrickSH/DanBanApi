@@ -7,6 +7,7 @@ use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use App\MembershipType;
 
 class Organization extends Model
 {
@@ -22,5 +23,10 @@ class Organization extends Model
     ];
 
     protected $table = "organization";
+
+    public function withMembershipType()
+    {
+        return $this->belongsTo(MembershipType::class,'membership_type_id');
+    }
 
 }
