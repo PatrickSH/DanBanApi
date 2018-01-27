@@ -21,7 +21,7 @@ class File extends Model
         'file_path'
     ];
 
-    protected $table = "file";
+    protected $table = "files";
 
     public function user()
     {

@@ -54,3 +54,13 @@ $router->post('user/update', [
 $router->get('user/get', [
     'as' => 'user_get', 'uses' => 'UserController@get'
 ]);
+
+
+/*******File***********/
+$router->post("file/type/store",[
+    'as' => 'file_type_store', 'uses' => 'FileController@storeType'
+]);
+
+$router->post("file/store",[
+    'as' => 'file_store', 'uses' => 'FileController@storeFile'
+]);
