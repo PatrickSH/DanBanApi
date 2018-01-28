@@ -36,36 +36,19 @@ class FileController extends Controller
     {
         $data = $request->all();
         if($request->get('organization_id')){ //Is organization
-            $path = $this->directory->handlePrivateDirCreation("organization",$request->get('organization_id'));
+            $path = $this->directory->
+            handlePrivateDirCreation("organization",$request->get('organization_id'),$_FILES['file']['tmp_name'],$_FILES['file']['name'])->
+            addFileToDir();
         }else{
-            $path = $this->directory->handlePrivateDirCreation("user",$request->get('user_id'));
+            $path = $this->directory->
+            handlePrivateDirCreation("user",$request->get('user_id'),$_FILES['file']['tmp_name'],$_FILES['file']['name'])->
+            addFileToDir();
         }
 
         $data['file_path'] = $path;
 
         $created = json_decode(File::create($data));
-        return (isset($created->id) && $created->id > 0) ? $created : 0;
-    }
-    /**
-     * @param Request $request
-     * @return json
-     */
-    public function get(Request $request)
-    {
-        if(!$request->get('id')){
-            $data = json_encode(MembershipType::all());
-        }else{
-            $data = json_encode(MembershipType::where('id',$request->get('id'))->get());
-        }
-        return $data;
+        return (isset($created->id) && $created->id > 0) ? $path : 0;
     }
 
-    /**
-     * @param Request $request
-     * @return json
-     */
-    public function update(Request $request)
-    {
-        $data = json_decode(MembershipType::find($request->get('id'))->update(['type' => $request->get('type')]));
-    }
 }
