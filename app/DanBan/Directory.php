@@ -10,10 +10,12 @@ class Directory{
     protected $file;
     protected $name;
     protected $path;
+    protected $url;
 
     public function __construct()
     {
-        $this->storage_path = storage_path()."/";
+        $this->storage_path = getcwd()."/";
+        $this->url = "http://api.danban.dev.cc/";
     }
 
     private function createFileName()
@@ -24,6 +26,8 @@ class Directory{
     public function handlePrivateDirCreation( $type, $id, $tmpFile, $name )
     {
         $path = $this->storage_path.$type."/".$id;
+        $this->url = $this->url.$type."/".$id;
+
         $this->type = $type;
         $this->id = $id;
         $this->name = $this->createFileName().$name;
@@ -46,8 +50,9 @@ class Directory{
     {
         try{
             //\Image::make($this->file)->save($this->path."/".$this->name);
-            move_uploaded_file($this->file,$this->path."/".$this->name);
-            return $this->path."/".$this->name;
+            $path = $this->path."/".$this->name;
+            move_uploaded_file($this->file,$path);
+            return $this->url."/".$this->name;
         }catch (Exception $e){
             throw new Exception("Could not save file");
         }
