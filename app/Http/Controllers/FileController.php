@@ -51,4 +51,36 @@ class FileController extends Controller
         return (isset($created->id) && $created->id > 0) ? $path : 0;
     }
 
+
+    public function createIndexFile(Request $request)
+    {
+        $random = str_random(10);
+        $folder = $this->directory->addNewFolderToPrivateDir("user",1,$random);
+        $folder->createTextFile("index","html",$request->get('code'));
+
+        if($request->get('css_type') && $request->get('css_type') == "document") { //We want to use CSS document
+            $folder->createTextFile("style","css",$request->get('css'));
+        }
+
+        if($request->get('script')){
+            $folder->createTextFile("script","js",$request->get('script'));
+        }
+    }
+
+
+    public function createCss(Request $request)
+    {
+        if($request->get('css_type') == "document"){ //We want to use CSS document
+
+        }else{
+
+        }
+
+        if($request->get('organization_id')){
+
+        }else{
+
+        }
+    }
+
 }

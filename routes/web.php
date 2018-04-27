@@ -61,6 +61,20 @@ $router->post("file/type/store",[
     'as' => 'file_type_store', 'uses' => 'FileController@storeType'
 ]);
 
+$router->post("file/textfile/store",[
+    'as' => 'file_textfile_store', 'uses' => 'FileController@createIndexFile'
+]);
+
 $router->post("file/store",[
     'as' => 'file_store', 'uses' => 'FileController@storeFile'
+]);
+
+
+/*****Internal**/
+$router->post("fonts/google/fetch",[
+   'as' => 'fetch_google_fonts', 'uses' => 'FontController@fetchGoogleFonts'
+]);
+
+$router->get("fonts/google/get",[
+    'as' => 'get_google_fonts', 'uses' => 'FontController@getGoogleFonts'
 ]);

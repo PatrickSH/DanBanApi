@@ -12,6 +12,8 @@ class Directory{
     protected $path;
     protected $url;
 
+    protected $currentFolder;
+
     public function __construct()
     {
         $this->storage_path = getcwd()."/";
@@ -23,6 +25,10 @@ class Directory{
         return str_random(40).rand(1,1000000);
     }
 
+    /**
+     * Obsolete should be replaced
+     * @return string
+     */
     public function handlePrivateDirCreation( $type, $id, $tmpFile, $name )
     {
         $path = $this->storage_path.$type."/".$id;
@@ -35,6 +41,7 @@ class Directory{
             if(mkdir($path)){ //Dir is created return path
                 $this->file = $tmpFile;
                 $this->path = $path;
+                $this->currentFolder = $path;
                 return $this;
             }else{ //Dir did not get created
                 throw new Exception("Could not create directory for path".$path);
@@ -42,10 +49,15 @@ class Directory{
         }else{ //Dir already exists return path
             $this->file = $tmpFile;
             $this->path = $path;
+            $this->currentFolder = $path;
             return $this;
         }
     }
 
+    /**
+     * Obsolete should be replaced
+     * @return string
+     */
     public function addFileToDir()
     {
         try{
@@ -58,5 +70,25 @@ class Directory{
         }
 
     }
+
+    public function addNewFolderToPrivateDir($type, $id, $folderName)
+    {
+        $path = $this->storage_path.$type."/".$id."/".$folderName;
+        if(mkdir($path)){ //Dir is created return path
+            $this->currentFolder = $path;
+            return $this;
+        }else{ //Dir did not get created
+            throw new Exception("Could not create directory for path".$path);
+        }
+    }
+
+    public function createTextFile($fileName,$extension,$text)
+    {
+        $file = fopen($this->currentFolder."/".$fileName.".".$extension, "ab+");
+        fwrite($file,$text);
+        fclose($file);
+    }
+
+
 
 }
